@@ -3,6 +3,31 @@
 {% block title %}Forum | Home{% endblock %}
 
 {% block body %}
-<h1 class="mb-5">Welcome to our Login</h1>
-<p class="mb-3"></p>
+<form>
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example1">Email address</label>
+      <input type="email" id="form2Example1" class="form-control" placeholder='"abc123@gmail.com"' />
+    </div>
+  
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example2">Password</label>
+      <input type="password" id="form2Example2" class="form-control" />
+    </div>
+  
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+      </div>
+    </div>
+  
+    <!-- Submit button -->
+    <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Not a member? <a href="#!">Register</a></p>
+    </div>
+  </form>
 {% endblock %}
