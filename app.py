@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from src.models import db
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
     'postgresql://postgres:@localhost:5432/Final_project_DB'
@@ -10,9 +9,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-@app.get('/')
-def index():
-    return render_template('index.html')
 
 @app.get('/user_login')
 def user_login():
@@ -45,5 +41,6 @@ def create_post():
 @app.get('/posts/search')
 def search_posts():
     return render_template('post_search.html')
+
 
 
