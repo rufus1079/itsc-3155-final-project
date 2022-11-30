@@ -9,10 +9,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+@app.get('/')
+def index():
+    return render_template('index.html')
 
 @app.get('/user_login')
 def user_login():
-    return render_template('user_login.html')
+    return render_template('userlogin.html')
 
 @app.get('/sign_up')
 def sign_up():
