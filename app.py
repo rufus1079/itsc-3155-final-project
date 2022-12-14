@@ -121,9 +121,18 @@ def search():
     if q != '':
         found_posts = post_repository_singleton.search_posts(q)
     
-    found_groups = []
+    found_groups_by_name = []
     if q != '':
-        found_groups = group_repository_singleton.search_groups(q)
+        found_groups_by_name = group_repository_singleton.search_groups_by_name(q)
+    
+    found_groups_by_descript = []
+    if q != '':
+        found_groups_by_descript = group_repository_singleton.search_groups_by_descript(q)
+    
+    found_groups = found_groups_by_name
+    for group in found_groups_by_descript:
+        if group not in found_groups:
+            found_groups.append(group)
     
     found_users = []
     if q != '':
