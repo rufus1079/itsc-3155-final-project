@@ -18,7 +18,10 @@ class user_repository:
         db.session.add(user)
         db.session.commit()
         return user
-
+    
+    def search_users(self, username):
+        user = User.query.filter(User.name.ilike(f'%{username}%')).all()
+        return user
 
 
 # Singleton to be used in other modules

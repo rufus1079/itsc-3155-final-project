@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, abort, redirect
+from flask import Flask, render_template, request, abort, redirect, session
 from flask_bcrypt import Bcrypt
 from src.models import db
 from src.repositories.post_repository import post_repository_singleton
@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.secret_key = os.getenv('APP_SECRET_KEY')
 
 db.init_app(app)
 
@@ -40,6 +40,7 @@ def list_all_posts():
 @app.get('/posts/<int:post_id>')
 def get_single_post(post_id):
     post = post_repository_singleton.get_post_by_id(post_id)
+
     return render_template('post.html', post = post)
 
 @app.get('/profile/<int:user_id>')
@@ -81,10 +82,19 @@ def login():
         return redirect('/')
 
     if not bcrypt.check_password_hash(existing_user.password, password):
-        pass
+        return redirect('/')
+    
+    session['user'] = {
+        'user_id': existing_user.user_id
+    }
+
+    return redirect('/')
 
 @app.post('/create_post')
 def create_post():
+    if 'user' not in session:
+        return redirect('/user_login')
+    
     title = request.form.get()
     content = request.form.get()
     if title == '' or content == '':
@@ -94,6 +104,9 @@ def create_post():
 
 @app.post('/create_group')
 def create_group():
+    if 'user' not in session:
+        return redirect('/user_login')
+    
     name = request.form.get()
     descript= request.form.get()
     if name == '' or descript == '':
@@ -106,15 +119,16 @@ def search():
     found_posts = []
     q = request.args.get('q', '')
     if q != '':
-        found_posts = post_repository_singleton.search_movies(q)
-    return render_template('post_search.html', poosts=found_posts, search_query=q)
-
-@app.get('/groups/search')
-def search_posts():
+        found_posts = post_repository_singleton.search_posts(q)
+    
     found_groups = []
-    q = request.args.get('q', '')
     if q != '':
-        found_groups = group_repository_singleton.search_movies(q)
-    return render_template('post_search.html', poosts=found_groups, search_query=q)
+        found_groups = group_repository_singleton.search_groups(q)
+    
+    found_users = []
+    if q != '':
+        found_users = user_repository_singleton.search_users(q)
+    return render_template('post_search.html', posts=found_posts, groups=found_groups, users=found_users, earch_query=q)
+
 
 
