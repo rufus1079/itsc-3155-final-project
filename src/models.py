@@ -43,7 +43,7 @@ class Group(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user_id"), nullable = False)
     group_name = db.Column(db.String(255), nullable = False)
     descript = db.Column(db.String(255), nullable = False)
-    members = db.Column(db.String(255, nullable = False))
+    members = db.Column(db.String(255), nullable = False)
 
     def __init__(self, user_id: int, group_name : str, descript: str, members: str):
         self.user_id = user_id
