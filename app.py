@@ -115,26 +115,28 @@ def logout():
 
 @app.post('/join_group')
 def join_group():
-    pass
-
-@app.post('/leave_group')
-def leave_group():
-    pass
+    member_key = session['user'].keys()
+    member = user_repository_singleton.get_user_by_id(session['users'][member_key[0]])
+    group_repository_singleton.join_group(member)
+    return redirect('/group/<int:group_id>')
 
 @app.post('/remove_member')
-def remove_member():
-    pass
+def remove_member(member):
+    group_repository_singleton.remove_member(member)
+    return redirect('/groups')
 
 @app.post('/create_post')
 def create_post():
     if 'user' not in session:
         return redirect('/user_login')
     
+    user_key = session['user'].keys()
+    user_id = session['users'][user_key[0]]
     title = request.form.get('title')
     content = request.form.get('description')
     if title == '' or content == '':
         abort(400)
-    created_post = post_repository_singleton.create_post(title, content)
+    created_post = post_repository_singleton.create_post(user_id, title, content)
     return redirect(f'/posts/{created_post.post_id}')
 
 @app.post('/create_group')
@@ -142,11 +144,14 @@ def create_group():
     if 'user' not in session:
         return redirect('/user_login')
     
-    name = request.form.get()
-    descript= request.form.get()
+    name = request.form.get("group_name")
+    descript= request.form.get("description")
+    user_key = session['user'].keys()
+    user_id = session['users'][user_key[0]]
+    member = user_repository_singleton.get_user_by_username(user_id)
     if name == '' or descript == '':
         abort(400)
-    created_group = post_repository_singleton.create_post(name, descript)
+    created_group = group_repository_singleton.create_group(user_id, name, descript, member)
     return redirect(f'/posts/{created_group.group_id}')  
 
 @app.post('/delete_user')

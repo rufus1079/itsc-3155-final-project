@@ -19,15 +19,8 @@ class User(db.Model):
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user_id"), nullable = False)
-    group_id = db.Column(db.Integer, db.ForeignKey("group_id"), nullable = True)
     title = db.Column(db.String(255), nullable = False)
     content = db.Column(db.String(255), nullable = False)
-
-    def __init__(self, user_id: int, group_id: int, title : str, content: str):
-        self.user_id = user_id
-        self.group_id = group_id
-        self.title = title
-        self.content = content
     
     def __init__(self, user_id: int, title : str, content: str):
         self.user_id = user_id
@@ -36,7 +29,7 @@ class Post(db.Model):
         self.content = content
         
     def __repr__(self) -> str:
-        return f'Post(user_id={self.user_id}, post_id={self.post_id}, group_id={self.group_id}, title={self.title}, content ={self.content}'
+        return f'Post(user_id={self.user_id}, post_id={self.post_id}, title={self.title}, content ={self.content}'
 
 class Group(db.Model):
     group_id = db.Column(db.Integer, primary_key=True)
