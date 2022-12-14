@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    user_id INT     NOT NULL,
+    user_id SERIAL,
     username    VARCHAR(255) NOT NULL,
     passwords VARCHAR(255) NOT NULL,
     email   VARCHAR(255)  NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE post (
-    post_id SERIAL  NOT NULL,
+    post_id SERIAL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     PRIMARY KEY (post_id), 
@@ -16,6 +16,7 @@ CREATE TABLE post (
 );
 
 CREATE TABLE group (
+    group_id SERIAL,
     group_name VARCHAR(255) NOT NULL,
     descript VARCHAR(255) NOT NULL,
     PRIMARY KEY (group_id),

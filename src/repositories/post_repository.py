@@ -1,23 +1,23 @@
-from src.models import db, User, Post
+from src.models import db, Post
 class post_repository:
 
     def get_all_posts(self):
-        movies = Post.query.all()
-        return movies
+        posts = Post.query.all()
+        return posts
 
-    def get_post_by_id(self, movie_id):
-        movie = Post.query.get(movie_id)
-        return movie
+    def get_post_by_id(self, post_id):
+        post = Post.query.get(post_id)
+        return post
 
-    def create_post(self, title, director, rating):
-        movie = Post(title, director, rating)
-        db.session.add(movie)
+    def create_post(self, title, content):
+        post = Post(title, content)
+        db.session.add(post)
         db.session.commit()
-        return movie
+        return post
 
     def search_posts(self, title):
-        movie = Post.query.filter(Post.title.ilike(f'%{title}%')).all()
-        return movie
+        post = Post.query.filter(Post.title.ilike(f'%{title}%')).all()
+        return post
 
 
 # Singleton to be used in other modules
