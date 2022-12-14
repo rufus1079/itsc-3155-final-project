@@ -37,6 +37,11 @@ def list_all_posts():
     all_posts = post_repository_singleton.get_all_posts()
     return render_template('list_all_posts.html', posts = all_posts)
 
+@app.get('/groups')
+def list_all_groups():
+    all_groups = group_repository_singleton.get_all_groups()
+    return render_template('list_all_groups.html', groups = all_groups)
+
 @app.get('/posts/<int:post_id>')
 def get_single_post(post_id):
     post = post_repository_singleton.get_post_by_id(post_id)
@@ -60,9 +65,9 @@ def get_group_user(group_id):
 
 @app.post('/register')
 def register():
-    username = request.form.get()
-    password = request.form.get()
-    email = request.form.get()
+    username = request.form.get('username')
+    password = request.form.get('password')
+    email = request.form.get('email')
 
     if username == '' or password == '' or email == '' or len(password) < 8 or '@' not in email:
         abort(400)
@@ -105,8 +110,8 @@ def create_post():
     if 'user' not in session:
         return redirect('/user_login')
     
-    title = request.form.get()
-    content = request.form.get()
+    title = request.form.get('title')
+    content = request.form.get('description')
     if title == '' or content == '':
         abort(400)
     created_post = post_repository_singleton.create_post(title, content)
@@ -125,22 +130,19 @@ def create_group():
     return redirect(f'/posts/{created_group.group_id}')  
 
 @app.post('/delete_user')
-def delete_user():
-    id = request.form.get()
-    user_repository_singleton.delete_user(id)
+def delete_user(user_id):
+    user_repository_singleton.delete_user(user_id)
     session.pop('user')
     return redirect('/')
 
 @app.post('/delete_post')
-def delete_post():
-    id = request.form.get()
-    post_repository_singleton.delete_post(id)
+def delete_post(post_id):
+    post_repository_singleton.delete_post(post_id)
     return redirect('/')
 
 @app.post('/delete_group')
-def delete_group():
-    id = request.form.get()
-    group_repository_singleton.delete_group(id)
+def delete_group(group_id):
+    group_repository_singleton.delete_group(group_id)
     return redirect('/')
 
 @app.get('/search')

@@ -24,9 +24,16 @@ class group_repository:
         return group
     
     def delete_group(self, id):
-        group = Group.query.filter(Group.id == id).delete()
+        group = Group.query.filter(Group.id == id)
+        db.session.delete(group)
         db.session.commit()
         return group
+    
+    def update_group(self, id, name, descript):
+        group = Group.query.filter(Group.id == id)
+        group.name = name
+        group.decript = descript
+        db.session.commit
 
 # Singleton to be used in other modules
 group_repository_singleton = group_repository()
