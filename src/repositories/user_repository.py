@@ -22,7 +22,11 @@ class user_repository:
     def search_users(self, username):
         user = User.query.filter(User.name.ilike(f'%{username}%')).all()
         return user
-
+    
+    def delete_user(self, id):
+        user = User.query.filter(User.id == id).delete()
+        db.session.commit()
+        return user
 
 # Singleton to be used in other modules
 user_repository_singleton = user_repository()

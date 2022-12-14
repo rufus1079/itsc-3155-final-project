@@ -18,6 +18,11 @@ class post_repository:
     def search_posts(self, title):
         post = Post.query.filter(Post.title.ilike(f'%{title}%')).all()
         return post
+    
+    def delete_post(self, id):
+        post = Post.query.filter(Post.id == id).delete()
+        db.session.commit()
+        return post
 
 
 # Singleton to be used in other modules

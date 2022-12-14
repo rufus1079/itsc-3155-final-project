@@ -40,18 +40,23 @@ def list_all_posts():
 @app.get('/posts/<int:post_id>')
 def get_single_post(post_id):
     post = post_repository_singleton.get_post_by_id(post_id)
-
+    if 'user' in session:
+        return render_template('post_auth.html', post = post)
     return render_template('post.html', post = post)
 
 @app.get('/profile/<int:user_id>')
 def get_single_user(user_id):
     user = user_repository_singleton.get_user_by_id(user_id)
+    if 'user' in session:
+        return render_template('profile_auth.html', user = user)
     return render_template('profile.html', user = user)
 
-@app.get('/profile/<int:group_id>')
+@app.get('/group/<int:group_id>')
 def get_group_user(group_id):
     group = group_repository_singleton.get_group_by_id(group_id)
-    return render_template('profile.html', group = group)
+    if 'user' in session:
+        return render_template('group_auth.html', group = group)
+    return render_template('group.html', group = group)
 
 @app.post('/register')
 def register():
@@ -90,6 +95,11 @@ def login():
 
     return redirect('/')
 
+@app.post('/logout')
+def logout():
+    session.pop('user')
+    return redirect('/')
+
 @app.post('/create_post')
 def create_post():
     if 'user' not in session:
@@ -114,10 +124,29 @@ def create_group():
     created_group = post_repository_singleton.create_post(name, descript)
     return redirect(f'/posts/{created_group.group_id}')  
 
+@app.post('/delete_user')
+def delete_user():
+    id = request.form.get()
+    user_repository_singleton.delete_user(id)
+    session.pop('user')
+    return redirect('/')
+
+@app.post('/delete_post')
+def delete_post():
+    id = request.form.get()
+    post_repository_singleton.delete_post(id)
+    return redirect('/')
+
+@app.post('/delete_group')
+def delete_group():
+    id = request.form.get()
+    group_repository_singleton.delete_group(id)
+    return redirect('/')
+
 @app.get('/search')
 def search():
     found_posts = []
-    q = request.args.get('q', '')
+    q = request.form.get('search')
     if q != '':
         found_posts = post_repository_singleton.search_posts(q)
     
@@ -137,7 +166,7 @@ def search():
     found_users = []
     if q != '':
         found_users = user_repository_singleton.search_users(q)
-    return render_template('post_search.html', posts=found_posts, groups=found_groups, users=found_users, earch_query=q)
+    return render_template('post_search.html', posts=found_posts, groups=found_groups, users=found_users, Search_query=q)
 
 
 

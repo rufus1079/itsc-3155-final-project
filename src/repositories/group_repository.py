@@ -22,6 +22,11 @@ class group_repository:
     def search_groups_by_descript(self, descript):
         group = Group.query.filter(Group.name.ilike(f'%{descript}%')).all()
         return group
+    
+    def delete_group(self, id):
+        group = Group.query.filter(Group.id == id).delete()
+        db.session.commit()
+        return group
 
 # Singleton to be used in other modules
 group_repository_singleton = group_repository()
