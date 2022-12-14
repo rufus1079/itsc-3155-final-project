@@ -9,8 +9,8 @@ class group_repository:
         group = Group.query.get(group_id)
         return group
 
-    def create_group(self, name, descript):
-        group = Group(name, descript)
+    def create_group(self, user_id, name, descript, members):
+        group = Group(user_id, name, descript, members)
         db.session.add(group)
         db.session.commit()
         return group
@@ -33,6 +33,20 @@ class group_repository:
         group = Group.query.filter(Group.id == id)
         group.name = name
         group.decript = descript
+        db.session.commit
+    
+    def join_group(self, member):
+        member_list = list(Group.members.split(" "))
+        member_list.append(member)
+        member_string = " ".join(member_list)
+        Group.members = member_string
+        db.session.commit
+        
+    def remove_member(self, member):
+        member_list = list(Group.members.split(" "))
+        member_list.remove(member)
+        member_string = " ".join(member_list)
+        Group.members = member_string
         db.session.commit
 
 # Singleton to be used in other modules

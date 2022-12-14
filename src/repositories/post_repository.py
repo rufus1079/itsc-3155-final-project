@@ -9,8 +9,8 @@ class post_repository:
         post = Post.query.get(post_id)
         return post
 
-    def create_post(self, title, content):
-        post = Post(title, content)
+    def create_post(self, user_id, title, content):
+        post = Post(user_id, title, content)
         db.session.add(post)
         db.session.commit()
         return post
