@@ -1,0 +1,15 @@
+{% extends '_layout.html' %}
+
+{% block title %}Forum | Home{% endblock %}
+
+{% block body %}
+<div class="table-row">
+	<div class="status" style="width: 200px"><i class="fa fa-fire"></i></div>
+	<div class="subjects">
+		<a href="">{{ posts.title }}</a>
+		<br>
+		<span>Posted by <b><a href="">{{ posts.user_id }}</a></b> .</span>
+        <td class="align-bottom"><button type="button" class="btn btn-primary btn-block mb-4">Edit</button></td>
+	</div>
+
+{% endblock %}

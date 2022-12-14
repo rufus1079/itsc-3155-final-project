@@ -1,0 +1,15 @@
+{% extends '_layout.html' %}
+
+{% block title %}Forum | Home{% endblock %}
+
+{% block body %}
+<div class="table-row">
+	<div class="status" style="width: 200px"><i class="fa fa-fire"></i></div>
+	<div class="subjects">
+		<label for="title">{{posts.title}}</label>
+		<label for="description">Description</label>
+		<br>
+		<span>Posted by <b><a href="">{{ posts.user_id }}</a></b> .</span>
+	</div>
+
+{% endblock %}

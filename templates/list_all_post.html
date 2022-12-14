@@ -1,0 +1,28 @@
+{% extends '_layout.html' %}
+
+{% block title %}Forum | Home{% endblock %}
+
+{% block body %}
+<h1 class="mb-5">All Posts</h1>
+<p class="mb-3">See our list of movie ratings below</p>
+<table class="table">
+  <thead>
+    <div class="table-row">
+        <div class="status" style="width: 200px"><i class="fa fa-fire"></i></div>
+        <div class="subjects">
+            <a href="">Post title</a>
+            <br>
+            <span>Posted by <b><a href="">User</a></b> .</span>
+        </div>
+  </thead>
+  <tbody>
+    {% for movie in movies %}
+      <tr>
+        <td><a href="/movies/{{ movie.movie_id }}">{{ movie.title }}</a></td>
+        <td>{{ movie.director }}</td>
+        <td>{{ movie.rating }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
