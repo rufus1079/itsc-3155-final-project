@@ -42,6 +42,14 @@ def list_all_groups():
     all_groups = group_repository_singleton.get_all_groups()
     return render_template('list_all_groups.html', groups = all_groups)
 
+@app.get('/make_post')
+def make_post():
+    return render_template('create_post.html')
+
+@app.get('/make_group')
+def make_group():
+    return render_template('create_group.html')
+
 @app.get('/posts/<int:post_id>')
 def get_single_post(post_id):
     post = post_repository_singleton.get_post_by_id(post_id)
@@ -104,6 +112,18 @@ def login():
 def logout():
     session.pop('user')
     return redirect('/')
+
+@app.post('join_group')
+def join_group():
+    pass
+
+@app.post('join_group')
+def join_group():
+    pass
+
+@app.post('join_group')
+def join_group():
+    pass
 
 @app.post('/create_post')
 def create_post():
