@@ -8,8 +8,7 @@ class User(db.Model):
     passwords = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, user_id: int, username: str, password: str, email: int):
-        self.user_id = user_id
+    def __init__(self, username: str, password: str, email: int):
         self.username = username
         self.password = password
         self.email = email
@@ -24,10 +23,15 @@ class Post(db.Model):
     title = db.Column(db.String(255), nullable = False)
     content = db.Column(db.String(255), nullable = False)
 
-    def __init__(self, user_id: int, post_id: int, group_id: int, title : str, content: str):
+    def __init__(self, user_id: int, group_id: int, title : str, content: str):
         self.user_id = user_id
-        self.post_id = post_id
         self.group_id = group_id
+        self.title = title
+        self.content = content
+    
+    def __init__(self, user_id: int, title : str, content: str):
+        self.user_id = user_id
+        self.group_id = None
         self.title = title
         self.content = content
         
@@ -37,16 +41,15 @@ class Post(db.Model):
 class Group(db.Model):
     group_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user_id"), nullable = False)
-    post_id = db.Column(db.Integer, db.ForeignKey("post_id"), nullable = False)
     group_name = db.Column(db.String(255), nullable = False)
     descript = db.Column(db.String(255), nullable = False)
+    members = db.Column(db.String(255, nullable = False))
 
-    def __init__(self, user_id: int, post_id: int, group_id: int, group_name : str, descript: str):
+    def __init__(self, user_id: int, group_name : str, descript: str, members: str):
         self.user_id = user_id
-        self.post_id = post_id
-        self.group_id = group_id
         self.group_name = group_name
         self.descript = descript
+        self.members = members
         
     def __repr__(self) -> str:
-        return f'Group(user_id={self.user_id}, post_id={self.post_id}, group_id={self.group_id}, group_name={self.group_name}, descript={self.descript}'
+        return f'Group(user_id={self.user_id}, group_id={self.group_id}, group_name={self.group_name}, descript={self.descript}, members={self.members}'

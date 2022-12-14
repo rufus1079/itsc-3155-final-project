@@ -24,9 +24,17 @@ class user_repository:
         return user
     
     def delete_user(self, id):
-        user = User.query.filter(User.id == id).delete()
+        user = User.query.filter(User.id == id)
+        db.session.delete(user)
         db.session.commit()
         return user
+
+    def update_user(self, username, password, email):
+        user = User.query.filter(User.id == id)
+        user.username = username
+        user.password = password
+        user.email = email
+        db.session.commit
 
 # Singleton to be used in other modules
 user_repository_singleton = user_repository()

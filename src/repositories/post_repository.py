@@ -20,10 +20,17 @@ class post_repository:
         return post
     
     def delete_post(self, id):
-        post = Post.query.filter(Post.id == id).delete()
+        post = Post.query.filter(Post.id == id)
+        db.session.delete(post)
         db.session.commit()
         return post
 
+    def update_post(self, id, title, content):
+        post = Post.query.filter(Post.id == id)
+        post.title = title
+        post.content = content
+        db.session.commit
+        
 
 # Singleton to be used in other modules
 post_repository_singleton = post_repository()
