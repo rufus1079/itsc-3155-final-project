@@ -113,16 +113,16 @@ def logout():
     session.pop('user')
     return redirect('/')
 
-@app.post('join_group')
+@app.post('/join_group')
 def join_group():
     pass
 
-@app.post('join_group')
-def join_group():
+@app.post('/leave_group')
+def leave_group():
     pass
 
-@app.post('join_group')
-def join_group():
+@app.post('/remove_member')
+def remove_member():
     pass
 
 @app.post('/create_post')
