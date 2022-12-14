@@ -48,7 +48,7 @@ def get_single_user(user_id):
     return render_template('profile.html', user = user)
 
 @app.get('/profile/<int:group_id>')
-def get_single_user(group_id):
+def get_group_user(group_id):
     group = group_repository_singleton.get_group_by_id(group_id)
     return render_template('profile.html', group = group)
 
@@ -72,7 +72,16 @@ def register():
 
 @app.post('/login')
 def login():
-    pass
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    existing_user = user_repository_singleton.get_user_by_username(username)
+
+    if not existing_user:
+        return redirect('/')
+
+    if not bcrypt.check_password_hash(existing_user.password, password):
+        pass
 
 @app.post('/create_post')
 def create_post():
@@ -93,7 +102,7 @@ def create_group():
     return redirect(f'/posts/{created_group.group_id}')  
 
 @app.get('/search')
-def search_posts():
+def search():
     found_posts = []
     q = request.args.get('q', '')
     if q != '':
