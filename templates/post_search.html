@@ -1,7 +1,30 @@
 {% extends '_layout.html' %}
 
 {% block title %}Forum | Home{% endblock %}
+{% block body %}
 
+{% if q != '' %}
+{% if post|length != 0 %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in posts %}
+      <tr>
+        <td><a href="/posts/{{ posts.post_id }}">{{ posts.title }}</a></td>
+        <td>{{ posts.description }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No posts found</p>
+{% endif %}
+{% endif %}
 {% block body %}
 
 {% endblock %}
