@@ -3,17 +3,17 @@
 {% block title %}Forum | Home{% endblock %}
 
 {% block body %}
-<form>
+<form action="/login" method="POST">
     <!-- Email input -->
     <div class="form-outline mb-4">
       <label class="form-label" for="form2Example1">Username</label>
-      <input type="email" id="form2Example1" class="username" placeholder='' />
+      <input type="text" id="username" name ="username" placeholder='' />
     </div>
   
     <!-- Password input -->
     <div class="form-outline mb-4">
       <label class="form-label" for="form2Example2">Password</label>
-      <input type="password" id="password" class="form-control" />
+      <input type="text" id="password" name ="username" class="form-control" />
     </div>
   
     <!-- 2 column grid layout for inline styling -->
@@ -23,7 +23,7 @@
     </div>
   
     <!-- Submit button -->
-    <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
   
     <!-- Register buttons -->
     <div class="text-center">

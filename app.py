@@ -77,7 +77,7 @@ def register():
     password = request.form.get('password')
     email = request.form.get('email')
 
-    if username == '' or password == '' or email == '' or len(password) < 8 or '@' not in email:
+    if username == '' or password == '' or email == '':
         abort(400)
 
     hashed_bytes = bcrypt.generate_password_hash(password, int(os.getenv('BCRYPT_ROUNDS')))
