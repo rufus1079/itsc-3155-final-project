@@ -18,6 +18,7 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 
 db.init_app(app)
 
+
 bcrypt = Bcrypt(app)
 
 @app.get('/')
