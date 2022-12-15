@@ -10,7 +10,7 @@ class user_repository:
         return user
     
     def get_user_by_username(self, username):
-        user = User.query.filter_by(username = username).first()
+        user = User.query.filter(User.username == username)
         return user
 
     def create_user(self, username, passwords, email):
@@ -24,7 +24,7 @@ class user_repository:
         return user
     
     def delete_user(self, id):
-        user = User.query.filter(User.id == id)
+        user = User.query.filter(User.user_id == id)
         db.session.delete(user)
         db.session.commit()
         return user

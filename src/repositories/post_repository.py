@@ -20,7 +20,7 @@ class post_repository:
         return post
     
     def delete_post(self, id):
-        post = Post.query.filter(Post.id == id)
+        post = Post.query.filter(Post.post_id == id)
         db.session.delete(post)
         db.session.commit()
         return post

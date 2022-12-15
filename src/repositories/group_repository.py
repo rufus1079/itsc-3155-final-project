@@ -30,7 +30,7 @@ class group_repository:
         return group
     
     def update_group(self, id, name, descript):
-        group = Group.query.filter(Group.id == id)
+        group = Group.query.filter(Group.group_id == id)
         group.name = name
         group.decript = descript
         db.session.commit
