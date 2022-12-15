@@ -12,7 +12,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:starwars@localhost:5432/Final_project_DB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.getenv('APP_SECRET_KEY')
 
@@ -44,10 +44,14 @@ def list_all_groups():
 
 @app.get('/make_post')
 def make_post():
+    if 'user' not in session:
+        return redirect('/user_login')
     return render_template('create_post.html')
 
 @app.get('/make_group')
 def make_group():
+    if 'user' not in session:
+        return redirect('/user_login')
     return render_template('create_group.html')
 
 @app.get('/posts/<int:post_id>')
@@ -127,9 +131,6 @@ def remove_member(member):
 
 @app.post('/create_post')
 def create_post():
-    if 'user' not in session:
-        return redirect('/user_login')
-    
     user_key = session['user'].keys()
     user_id = session['users'][user_key[0]]
     title = request.form.get('title')
@@ -140,10 +141,7 @@ def create_post():
     return redirect(f'/posts/{created_post.post_id}')
 
 @app.post('/create_group')
-def create_group():
-    if 'user' not in session:
-        return redirect('/user_login')
-    
+def create_group(): 
     name = request.form.get("group_name")
     descript= request.form.get("description")
     user_key = session['user'].keys()
