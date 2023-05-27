@@ -2,6 +2,29 @@
 
 {% block title %}Forum | Home{% endblock %}
 
+{% block navbar %}
+{% if logged_in == True %}
+<li class="nav-item">
+    <a class="nav-link" href="/make_post">Create a Post</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/make_group">Create a Group</a>
+  </li>
+  <li class="nav-item">
+    <form action="/logout" method="POST">
+        <button type="submit" class="nav-link">Logout</button>
+    </form>
+  </li>
+{% endif %}
+
+{% if logged_in == False %}
+<li class="nav-item">
+    <a class="nav-link" href="/user_login">Login</a>
+  </li>
+{% endif %}
+
+{% endblock %}
+
 {% block body %}
 <form action="/register" method="POST">
     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
@@ -9,7 +32,7 @@
     <!-- Username input -->
     <div class="form-outline mb-4">
         <label class="form-label" for="username">Enter a username</label>
-        <input type="text" id="username" class="form-control" />
+        <input type="text" id="username" name="username" class="form-control" />
       </div>
 
     <!-- Email input -->
@@ -20,8 +43,8 @@
   
     <!-- Password input -->
     <div class="form-outline mb-4">
-      <label class="form-label" for="password">Enter a password</label>
-      <input type="text" id="password" name="password" class="form-control" />
+      <label class="form-label" for="passwords">Enter a password</label>
+      <input type="text" id="passwords" name="passwords" class="form-control" />
     </div>
   
     <!-- 2 column grid layout for inline styling -->

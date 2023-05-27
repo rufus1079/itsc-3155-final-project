@@ -2,6 +2,29 @@
 
 {% block title %}Forum | Home{% endblock %}
 
+{% block navbar %}
+{% if logged_in == True %}
+<li class="nav-item">
+    <a class="nav-link" href="/make_post">Create a Post</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/make_group">Create a Group</a>
+  </li>
+  <li class="nav-item">
+    <form action="/logout" method="POST">
+        <button type="submit" class="nav-link">Logout</button>
+    </form>
+  </li>
+{% endif %}
+
+{% if logged_in == False %}
+<li class="nav-item">
+    <a class="nav-link" href="/user_login">Login</a>
+  </li>
+{% endif %}
+
+{% endblock %}
+
 {% block body %}
 <h1 class="mb-5">All Posts</h1>
 <p class="mb-3">See our list of movie ratings below</p>

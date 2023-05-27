@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE Users (
     user_id SERIAL,
     username    VARCHAR(255) NOT NULL,
     passwords VARCHAR(255) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE users (
     PRIMARY KEY (user_id)
 );
 
-CREATE TABLE post (
+CREATE TABLE Post (
     post_id SERIAL,
     user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
@@ -15,11 +15,12 @@ CREATE TABLE post (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE group (
+CREATE TABLE User_Group (
     group_id SERIAL,
     user_id INT NOT NULL,
     group_name VARCHAR(255) NOT NULL,
     descript VARCHAR(255) NOT NULL,
+    members VARCHAR(255) NOT NULL,
     PRIMARY KEY (group_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 )

@@ -1,36 +1,36 @@
-from src.models import db, User
+from src.models import db, Users
 class user_repository:
 
     def get_all_users(self):
-        users = User.query.all()
+        users = Users.query.all()
         return users
 
     def get_user_by_id(self, user_id):
-        user = User.query.get(user_id)
+        user = Users.query.get(user_id)
         return user
     
     def get_user_by_username(self, username):
-        user = User.query.filter(User.username == username)
+        user = Users.query.filter_by(username=username).first()
         return user
 
     def create_user(self, username, passwords, email):
-        user = User(username, passwords, email)
+        user = Users(username, passwords, email)
         db.session.add(user)
         db.session.commit()
         return user
     
     def search_users(self, username):
-        user = User.query.filter(User.name.ilike(f'%{username}%')).all()
+        user = Users.query.filter(Users.name.ilike(f'%{username}%')).all()
         return user
     
     def delete_user(self, id):
-        user = User.query.filter(User.user_id == id)
+        user = Users.query.filter(Users.user_id == id)
         db.session.delete(user)
         db.session.commit()
         return user
 
     def update_user(self, username, password, email):
-        user = User.query.filter(User.id == id)
+        user = Users.query.filter(Users.id == id)
         user.username = username
         user.password = password
         user.email = email
